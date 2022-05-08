@@ -3,6 +3,8 @@ import time
 from typing import Union
 from logging import getLogger
 
+import requests
+
 from scale_board import scale_server, BoardProtocol
 from scale_board.board import serial
 from scale_board.settings import config
@@ -21,9 +23,11 @@ def start_loop(board: Union[serial.BoardSerial]):
         if not board.connected:
             board.connect()
 
-        weight = scale_server.get_weight(server=config.SCALE_SERVER_URL)
-
-        board.send_weight(weight=weight)
+        try:
+            weight = scale_server.get_weight(server=config.SCALE_SERVER_URL)
+            board.send_weight(weight=weight)
+        except (ValueError, requests.exceptions.ConnectionError) as err:
+            log.error(err)
 
         time.sleep(0.2)
 
