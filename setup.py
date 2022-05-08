@@ -3,7 +3,7 @@ from setuptools import setup
 
 NAME = 'scale-board'
 DESCRIPTION = 'Displaying weight data on a remote display'
-MODULES = ['scale_board', 'scale_board.settings']
+MODULES = ['scale_board', 'scale_board.settings', 'scale_board.board', 'scale_board.board.serial']
 
 with open(file='VERSION', mode='r', encoding="UTF-8") as version_file:
     VERSION = version_file.read().replace("v", "")
