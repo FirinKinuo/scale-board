@@ -30,6 +30,7 @@ class ParityEnum(Enum):
 
 class BoardConfiguration(TypedDict):
     """Board configuration"""
+    protocol: str
     port: str
     baudrate: int
     byte_size: int
@@ -39,6 +40,7 @@ class BoardConfiguration(TypedDict):
 
 __required_envs = [
     'SCALE_SERVER_URL',
+    'BOARD_PROTOCOL',
     'BOARD_PORT',
     'BOARD_BAUDRATE',
     'BOARD_BYTE_SIZE',
@@ -69,6 +71,7 @@ LOG_LEVEL = logging.getLevelName((environ.get('LOG_LEVEL') or 'info' if not DEBU
 
 SCALE_SERVER_URL = environ.get('SCALE_SERVER_URL')
 BOARD = BoardConfiguration(
+    protocol=environ.get('BOARD_PROTOCOL').upper(),
     port=environ.get('BOARD_PORT'),
     baudrate=int(environ.get('BOARD_BAUDRATE')),
     byte_size=int(environ.get('BOARD_BYTE_SIZE')),
